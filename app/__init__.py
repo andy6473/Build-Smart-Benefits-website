@@ -1,0 +1,1 @@
+"""Smart Benefits website application."""

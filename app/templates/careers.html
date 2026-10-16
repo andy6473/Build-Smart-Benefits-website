@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-hero page-hero-compact">
+  <div class="container narrow">
+    <p class="eyebrow">Careers at Smart Benefits</p>
+    <h1>Build a career around helping people.</h1>
+    <p class="hero-lead">We’re interested in connecting with thoughtful people who want to grow in insurance and financial services.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="container career-form-layout">
+    <div class="career-intro"><p class="eyebrow">Join our team</p><h2>Licensed life &amp; health agent</h2><p>Share your experience and contact details. Our team will review your application and follow up.</p><ul><li>Personal, client-focused work</li><li>Opportunity to build a long-term career</li><li>Supportive, relationship-driven team</li></ul><p class="form-note">Application documents are stored locally on the site server and are accessible only to an administrator.</p></div>
+    <div class="form-card">
+      <h2>Apply now</h2>
+      {% if request.query_params.get('submitted') %}<div class="notice notice-success" role="status">Your application has been received. Thank you for your interest.</div>{% endif %}
+      <form method="post" action="/careers" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <label>Full name <span aria-hidden="true">*</span><input name="name" autocomplete="name" maxlength="200" required></label>
+        <div class="form-row">
+          <label>Phone number <span aria-hidden="true">*</span><input name="phone" type="tel" autocomplete="tel" maxlength="40" required></label>
+          <label>Email address <span aria-hidden="true">*</span><input name="email" type="email" autocomplete="email" maxlength="254" required></label>
+        </div>
+        <label>Address <span aria-hidden="true">*</span><input name="address" autocomplete="street-address" maxlength="500" required></label>
+        <label>License number<input name="license_number" maxlength="100" placeholder="e.g. GA-1234567"></label>
+        <label>Upload license (PDF, DOC, DOCX; max 10 MB)<input name="license_file" type="file" accept=".pdf,.doc,.docx"></label>
+        <label>Upload resume (PDF, DOC, DOCX; max 10 MB)<input name="resume_file" type="file" accept=".pdf,.doc,.docx"></label>
+        <button class="button button-full" type="submit">Submit application <span aria-hidden="true">→</span></button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

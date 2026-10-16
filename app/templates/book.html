@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-hero page-hero-compact">
+  <div class="container narrow">
+    <p class="eyebrow">One-on-one guidance</p>
+    <h1>Book a free consultation.</h1>
+    <p class="hero-lead">Choose a date and time for a 60-minute personalized insurance assessment. Consultations are available Monday through Saturday, 9am–6pm Eastern Time.</p>
+  </div>
+</section>
+<section class="section booking-section">
+  <div class="container booking-container">
+    {% if booking_complete %}
+    <div class="booking-success" role="status"><span class="success-mark">✓</span><h2>Your consultation request is in.</h2><p>Thank you. Smart Benefits will follow up to confirm your appointment.</p><a class="text-link" href="/">Return to home <span aria-hidden="true">→</span></a></div>
+    {% else %}
+    <div class="booking-steps" aria-label="Booking steps"><span class="step-active"><b>1</b> Select a date</span><span><b>2</b> Choose a time</span><span><b>3</b> Your details</span></div>
+    <div class="booking-grid">
+      <section class="calendar-card" aria-label="Choose an appointment date">
+        <div class="calendar-header">
+          {% if can_previous_month %}<a class="calendar-arrow" href="/book?month={{ previous_month }}" aria-label="Previous month">‹</a>{% else %}<span class="calendar-arrow calendar-arrow-disabled" aria-label="Previous month" aria-disabled="true">‹</span>{% endif %}
+          <h2>{{ month.strftime('%B %Y') }}</h2>
+          {% if can_next_month %}<a class="calendar-arrow" href="/book?month={{ next_month }}" aria-label="Next month">›</a>{% else %}<span class="calendar-arrow calendar-arrow-disabled" aria-label="Next month" aria-disabled="true">›</span>{% endif %}
+        </div>
+        <div class="calendar-grid calendar-weekdays" aria-hidden="true">{% for weekday in ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'] %}<span>{{ weekday }}</span>{% endfor %}</div>
+        <div class="calendar-grid">
+          {% for week in weeks %}
+            {% for cell in week %}
+              {% if cell.available %}
+                <a class="calendar-day{% if chosen_day == cell.date %} day-selected{% endif %}" href="/book?month={{ month.strftime('%Y-%m') }}&amp;date={{ cell.date.isoformat() }}" aria-label="{{ cell.date.strftime('%A, %B %d') }}">{{ cell.date.day }}</a>
+              {% else %}
+                <span class="calendar-day day-disabled{% if not cell.in_month %} day-outside{% endif %}">{{ cell.date.day }}</span>
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+        </div>
+        <p class="calendar-note">Select an available weekday or Saturday. Sundays and past dates are unavailable.</p>
+      </section>
+      <section class="time-card">
+        <p class="eyebrow">Step 2</p><h2>Select a time</h2>
+        {% if chosen_day %}
+          <p class="selected-date">{{ chosen_day.strftime('%A, %B %d, %Y') }}</p>
+          {% if available_times %}
+          <form method="post" action="/book">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <input type="hidden" name="appointment_date" value="{{ chosen_day.isoformat() }}">
+            <label>Your name <span aria-hidden="true">*</span><input name="name" autocomplete="name" maxlength="200" required></label>
+            <label>Phone number <span aria-hidden="true">*</span><input name="phone" type="tel" autocomplete="tel" maxlength="40" required></label>
+            <label>Email address <span aria-hidden="true">*</span><input name="email" type="email" autocomplete="email" maxlength="254" required></label>
+            <label>Available start time <span aria-hidden="true">*</span>
+              <select name="appointment_time" required><option value="">Choose a time</option>{% for slot in available_times %}<option value="{{ slot }}">{{ formatted_times[slot] }}</option>{% endfor %}</select>
+            </label>
+            <button class="button button-full" type="submit">Request this consultation <span aria-hidden="true">→</span></button>
+          </form>
+          {% else %}<p class="empty-slots">No times are available for this date. Please choose another.</p>{% endif %}
+        {% else %}
+          <div class="time-placeholder"><span class="placeholder-number">02</span><p>Pick an available date to see appointment times.</p></div>
+        {% endif %}
+      </section>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

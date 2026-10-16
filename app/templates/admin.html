@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-hero page-hero-compact">
+  <div class="container"><p class="eyebrow">Private dashboard</p><h1>Site inquiries.</h1><p class="hero-lead">Recent form submissions and consultation requests are listed below.</p></div>
+</section>
+<section class="section admin-section">
+  <div class="container">
+    <div class="admin-panel"><h2>Contact messages</h2>{% if messages %}<div class="table-wrap"><table><thead><tr><th>Name</th><th>Contact</th><th>Category</th><th>Message</th><th>Received</th></tr></thead><tbody>{% for item in messages %}<tr><td>{{ item['name'] }}</td><td>{{ item['email'] }}<br>{{ item['phone'] }}</td><td>{{ item['coverage_group'] }}</td><td>{{ item['message'] }}</td><td>{{ item['created_at'] }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<p class="empty-slots">No contact messages yet.</p>{% endif %}</div>
+    <div class="admin-panel"><h2>Webinar registrations</h2>{% if registrations %}<div class="table-wrap"><table><thead><tr><th>Name</th><th>Contact</th><th>Agent status</th><th>Received</th></tr></thead><tbody>{% for item in registrations %}<tr><td>{{ item['name'] }}</td><td>{{ item['email'] }}<br>{{ item['phone'] }}</td><td>{{ item['agent_status'] }}</td><td>{{ item['created_at'] }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<p class="empty-slots">No registrations yet.</p>{% endif %}</div>
+    <div class="admin-panel"><h2>Consultation bookings</h2>{% if bookings %}<div class="table-wrap"><table><thead><tr><th>Name</th><th>Contact</th><th>Appointment</th><th>Received</th></tr></thead><tbody>{% for item in bookings %}<tr><td>{{ item['name'] }}</td><td>{{ item['email'] }}<br>{{ item['phone'] }}</td><td>{{ item['appointment_date'] }} · {{ item['appointment_time'] }} ET</td><td>{{ item['created_at'] }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<p class="empty-slots">No bookings yet.</p>{% endif %}</div>
+    <div class="admin-panel"><h2>Career applications</h2>{% if applications %}<div class="table-wrap"><table><thead><tr><th>Name</th><th>Contact</th><th>License</th><th>Documents</th><th>Received</th></tr></thead><tbody>{% for item in applications %}<tr><td>{{ item['name'] }}<br>{{ item['address'] }}</td><td>{{ item['email'] }}<br>{{ item['phone'] }}</td><td>{{ item['license_number'] }}</td><td>{% if item['license_file'] %}<a href="/admin/applications/{{ item['id'] }}/license">License</a> {% endif %}{% if item['resume_file'] %}<a href="/admin/applications/{{ item['id'] }}/resume">Resume</a>{% endif %}</td><td>{{ item['created_at'] }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<p class="empty-slots">No applications yet.</p>{% endif %}</div>
+  </div>
+</section>
+{% endblock %}

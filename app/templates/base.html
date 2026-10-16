@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#123a32">
+    <meta name="description" content="Smart Benefits offers personal insurance guidance for families and businesses.">
+    <title>{{ title }} | Smart Benefits</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/styles.css') }}">
+    <script src="{{ url_for('static', path='/site.js') }}" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="/" aria-label="Smart Benefits home">
+          <span class="brand-mark" aria-hidden="true">S</span>
+          <span>Smart<span class="brand-light">Benefits</span></span>
+        </a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+        <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+          <a href="/">Home</a>
+          <a href="/about">About</a>
+          <a href="/contact">Contact</a>
+          <a href="/rsvp">Saturday Webinar</a>
+          <a class="button button-small" href="/book">Book a consultation</a>
+        </nav>
+      </div>
+    </header>
+    <main id="main">
+      {% block content %}{% endblock %}
+    </main>
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <a class="brand brand-footer" href="/">
+            <span class="brand-mark" aria-hidden="true">S</span>
+            <span>Smart<span class="brand-light">Benefits</span></span>
+          </a>
+          <p>Business, personal, and family insurance guidance — all in one place.</p>
+          <a href="tel:+17708269952">(770) 826-9952</a>
+        </div>
+        <div>
+          <h2 class="footer-heading">Explore</h2>
+          <a href="/about">About us</a>
+          <a href="/contact">Contact</a>
+          <a href="/rsvp">Saturday webinar</a>
+          <a href="/careers">Careers</a>
+        </div>
+        <div>
+          <h2 class="footer-heading">Coverage</h2>
+          <span>Business insurance</span>
+          <span>Life &amp; health</span>
+          <span>Personal insurance</span>
+          <span>Retirement &amp; investment</span>
+        </div>
+      </div>
+      <div class="container footer-disclaimer">Information on this site is for general educational purposes and is not financial, tax, or legal advice.</div>
+      <div class="container footer-bottom">
+        <span>&copy; {{ current_year }} Smart Benefits. All rights reserved.</span>
+        <span>Georgia · Eastern Time</span>
+      </div>
+    </footer>
+  </body>
+</html>

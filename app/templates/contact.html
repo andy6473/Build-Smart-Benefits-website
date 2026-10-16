@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-hero page-hero-compact">
+  <div class="container narrow">
+    <p class="eyebrow">Start a conversation</p>
+    <h1>Contact us.</h1>
+    <p class="hero-lead">Ready to protect what matters most? Reach out for a personalized, no-obligation assessment.</p>
+  </div>
+</section>
+<section class="section contact-section">
+  <div class="container contact-grid">
+    <div class="contact-details">
+      <p class="eyebrow">Get in touch</p><h2>Here when you need us.</h2>
+      <p>Everyone has different insurance needs. Talk with us about your business, family, or financial goals and find out how we can help.</p>
+      <a class="contact-detail" href="tel:+17708269952"><span class="detail-icon">01</span><span><small>PHONE</small><strong>(770) 826-9952</strong><span>Speak directly with an advisor</span></span></a>
+      <a class="contact-detail" href="mailto:sam2800@gmail.com"><span class="detail-icon">02</span><span><small>EMAIL</small><strong>Send us an email</strong><span>We respond within one business day</span></span></a>
+      <div class="contact-detail"><span class="detail-icon">03</span><span><small>BUSINESS HOURS</small><strong>Monday – Friday</strong><span>9am – 6pm Eastern Time</span></span></div>
+      <div class="coverage-note"><small>WE COVER</small><p>Investment strategy<br>Gold mine strategy<br>Business, life, health &amp; personal coverage</p></div>
+    </div>
+    <div class="form-card">
+      <h2>Send us a message</h2>
+      {% if request.query_params.get('sent') %}<div class="notice notice-success" role="status">Thank you. Your message has been received.</div>{% endif %}
+      <form method="post" action="/contact">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <div class="form-row">
+          <label>Full name <span aria-hidden="true">*</span><input name="name" type="text" autocomplete="name" placeholder="Jane Smith" maxlength="200" required></label>
+          <label>Phone number<input name="phone" type="tel" autocomplete="tel" placeholder="(770) 555-0100" maxlength="40"></label>
+        </div>
+        <label>Email address <span aria-hidden="true">*</span><input name="email" type="email" autocomplete="email" placeholder="jane@example.com" maxlength="254" required></label>
+        <label>Coverage category <span aria-hidden="true">*</span>
+          <select name="coverage_group" required><option value="">Select a coverage category…</option><option>Investment Strategy</option><option>Gold Mine Strategy</option></select>
+        </label>
+        <label>Message<textarea name="message" rows="4" maxlength="4000" placeholder="Tell us a bit about your situation or any questions you have…"></textarea></label>
+        <button class="button button-full" type="submit">Send message <span aria-hidden="true">→</span></button>
+        <p class="form-note">Your information is stored securely for follow-up and is never sold.</p>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-hero page-hero-compact">
+  <div class="container narrow">
+    <p class="eyebrow">Free in-person event · Atlanta, Georgia</p>
+    <h1>Saturday in-person webinar.</h1>
+    <p class="hero-lead">Join us for a welcoming session on life insurance, investment strategies, and building lasting financial security for your family.</p>
+  </div>
+</section>
+<section class="section event-section">
+  <div class="container event-grid">
+    <div class="event-content">
+      <div class="event-facts"><span>Every Saturday</span><span>In-person event</span><span>Atlanta, GA</span><span>Limited seats</span></div>
+      <p class="eyebrow">On the agenda</p><h2>What you’ll learn</h2>
+      <div class="learn-list">
+        <article><span>01</span><div><h3>Life insurance fundamentals</h3><p>Understand term, whole, and universal life policies and the questions to ask when choosing coverage.</p></div></article>
+        <article><span>02</span><div><h3>Investment strategies</h3><p>Learn about financial products and strategies that may combine protection and potential growth.</p></div></article>
+        <article><span>03</span><div><h3>Retirement planning</h3><p>Explore ways to think about long-term goals and a retirement income strategy.</p></div></article>
+        <article><span>04</span><div><h3>Agent opportunities</h3><p>Hear about career paths in insurance and financial services.</p></div></article>
+      </div>
+      <p class="event-question">Questions? Call <a href="tel:+17708269952">(770) 826-9952</a>.</p>
+    </div>
+    <aside class="form-card event-form">
+      <p class="eyebrow">Free event</p><h2>Reserve your seat</h2><p>Seats are limited — register your interest.</p>
+      {% if request.query_params.get('registered') %}<div class="notice notice-success" role="status">Thanks for registering. We’ll be in touch with event details.</div>{% endif %}
+      <form method="post" action="/rsvp">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <label>Full name <span aria-hidden="true">*</span><input name="name" type="text" autocomplete="name" placeholder="Jane Smith" maxlength="200" required></label>
+        <label>Phone number <span aria-hidden="true">*</span><input name="phone" type="tel" autocomplete="tel" placeholder="(770) 555-0100" maxlength="40" required></label>
+        <label>Email address <span aria-hidden="true">*</span><input name="email" type="email" autocomplete="email" placeholder="jane@example.com" maxlength="254" required></label>
+        <label>Agent status <span aria-hidden="true">*</span><select name="agent_status" required><option value="">Select your status…</option><option>Licensed Agent</option><option>Unlicensed Agent</option><option>Not an Agent</option></select></label>
+        <button class="button button-full" type="submit">Reserve my seat <span aria-hidden="true">→</span></button>
+        <p class="form-note">We’ll use your details to follow up about this event.</p>
+      </form>
+    </aside>
+  </div>
+</section>
+{% endblock %}
