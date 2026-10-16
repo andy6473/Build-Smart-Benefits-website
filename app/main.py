@@ -274,6 +274,10 @@ def create_app(
     def about(request: Request) -> HTMLResponse:
         return _render(request, "about.html", title="About Smart Benefits")
 
+    @app.get("/compare", response_class=HTMLResponse)
+    def compare(request: Request) -> HTMLResponse:
+        return _render(request, "compare.html", title="Compare Coverage Areas")
+
     @app.get("/contact", response_class=HTMLResponse)
     def contact(request: Request) -> HTMLResponse:
         return _render(request, "contact.html", title="Contact Smart Benefits")

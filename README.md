@@ -4,7 +4,7 @@ A fresh, local-first rebuild of the public Smart Benefits website. This workspac
 
 ## What's included
 
-- Responsive home, about, contact, webinar RSVP, consultation booking, and careers pages.
+- Responsive home, about, coverage comparison, contact, webinar RSVP, consultation booking, and careers pages.
 - Contact messages, webinar registrations, and job applications stored in SQLite.
 - Consultation booking for Monday through Saturday, with hourly start times from 9am to 5pm Eastern Time. A unique database constraint prevents two bookings for the same slot.
 - Optional PDF, DOC, and DOCX resume/license uploads, limited to 10 MB each and stored outside the public static directory.
@@ -23,7 +23,8 @@ Submissions are saved locally. No email, calendar, payment, analytics, or extern
 From the project folder in PowerShell:
 
 ```powershell
-py -m venv .venv
+Set-Location D:\theSmart
+python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements-dev.txt
 uvicorn app.main:app --reload
@@ -32,6 +33,18 @@ uvicorn app.main:app --reload
 Open <http://127.0.0.1:8000>. The SQLite database and private application uploads are created under `data\` the first time the app starts. That directory is ignored by Git.
 
 The booking calendar uses the `America/New_York` time zone. Set `DATA_DIR` to change where the database and uploads are stored.
+
+### Start automatically when opening this folder in VS Code
+
+The auto-run task is stored in `.vscode\tasks.json`. Open the **project root** (`D:\theSmart`) in VS Code, not the `tests` subfolder. In the integrated terminal, prepare the local virtual environment once:
+
+```powershell
+Set-Location D:\theSmart
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r .\requirements.txt
+```
+
+Reopen the project folder in VS Code. If prompted, allow automatic tasks for this workspace. The `Run Smart Benefits` task starts the development server; open <http://127.0.0.1:8000> and leave the VS Code task terminal running. You can also select **Terminal → Run Task → Run Smart Benefits** to start it manually. Stop it with **Ctrl+C**.
 
 ## Admin dashboard
 

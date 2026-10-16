@@ -33,11 +33,25 @@ def future_weekday() -> date:
 
 
 def test_all_public_pages_and_health_check_load(client: TestClient) -> None:
-    for path in ("/", "/about", "/contact", "/rsvp", "/book", "/careers"):
+    for path in ("/", "/about", "/compare", "/contact", "/rsvp", "/book", "/careers"):
         response = client.get(path)
         assert response.status_code == 200
         assert "<h1" in response.text
     assert client.get("/health").json() == {"status": "ok"}
+
+
+def test_comparison_page_explains_all_coverage_areas(client: TestClient) -> None:
+    response = client.get("/compare")
+    assert response.status_code == 200
+    for heading in (
+        "Business insurance",
+        "Life &amp; health",
+        "Personal insurance",
+        "Retirement &amp; investment",
+    ):
+        assert heading in response.text
+    assert "not equivalent policies" in response.text
+    assert "not a quote, policy recommendation" in response.text
 
 
 def test_contact_form_persists_valid_submission(client: TestClient) -> None:
