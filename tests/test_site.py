@@ -14,6 +14,7 @@ pytestmark = pytest.mark.e2e
     [
         ("/", re.compile(r"THE SMART\s*BENEFITS", re.IGNORECASE)),
         ("/about", re.compile(r"Your one-stop insurance brokerage partner", re.IGNORECASE)),
+        ("/compare", re.compile(r"Compare coverage areas", re.IGNORECASE)),
         ("/contact", re.compile(r"Contact us", re.IGNORECASE)),
         ("/rsvp", re.compile(r"Saturday in-person webinar", re.IGNORECASE)),
         ("/book", re.compile(r"Book a free consultation", re.IGNORECASE)),
@@ -35,6 +36,22 @@ def test_home_page_links_to_booking_contact_and_careers(page: Page) -> None:
     )
     expect(page.get_by_role("link", name="Contact").first).to_have_attribute("href", "/contact")
     expect(page.get_by_role("link", name="Careers").first).to_have_attribute("href", "/careers")
+    expect(page.get_by_role("link", name=re.compile("Compare coverage areas", re.I))).to_have_attribute(
+        "href", "/compare"
+    )
+
+
+def test_comparison_page_covers_four_coverage_areas(page: Page) -> None:
+    page.goto(f"{BASE_URL}/compare")
+
+    for title in (
+        "Business insurance",
+        "Life & health",
+        "Personal insurance",
+        "Retirement & investment",
+    ):
+        expect(page.get_by_role("heading", name=title)).to_be_visible()
+    expect(page.get_by_text(re.compile("not equivalent policies", re.I))).to_be_visible()
 
 
 def test_contact_form_exposes_required_fields(page: Page) -> None:
